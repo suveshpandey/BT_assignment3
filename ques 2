@@ -1,0 +1,35 @@
+// Path Sum I Leetcode:- 112
+class Solution {
+public:
+    bool hasPathSum(TreeNode* root, int sum) {
+        if(root == NULL) return false;
+
+        // create 2 stacks for the path and and the sums
+        stack<TreeNode*> path;
+        stack<int> sumPath;
+
+        path.push(root);
+        sumPath.push(root->val);
+
+        while(path.size()>0){
+            TreeNode* temp = path.top();
+            path.pop();
+            int tempVal = sumPath.top();
+            sumPath.pop();
+
+            // if  a child node and we find the sum total, return true
+            if(temp->left == NULL and temp->right == NULL and tempVal == sum) return true;
+            if(temp->right != NULL){
+                path.push(temp->right);
+                sumPath.push(temp->right->val + tempVal);
+            }
+            if(temp->left != NULL){
+                path.push(temp->left);
+                sumPath.push(temp->left->val + tempVal);
+            }
+            
+            
+        }
+        return false;
+    }
+};
